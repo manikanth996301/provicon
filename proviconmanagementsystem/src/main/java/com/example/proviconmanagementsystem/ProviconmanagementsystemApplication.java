@@ -8,6 +8,7 @@ public class ProviconmanagementsystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProviconmanagementsystemApplication.class, args);
+		
 	}
 
 }
