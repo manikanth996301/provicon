@@ -55,10 +55,18 @@ public class AuthServiceImpl implements AuthService{
 		if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
 			throw new RuntimeException("Invalid credentials");
 		}
-		String role=user.getRole().iterator().next().name();
-		String token=jwtTokenProvider.generateToken(user.getUserName(), role);
+		//String role=user.getRole().iterator().next().name();
+		
+		String roleClaim;
+		if(user.getRole().contains(Role.ADMIN)) {
+			roleClaim="ADMIN";
+		}
+		else {
+			roleClaim=user.getRole().stream().findFirst().map(Enum::name).orElse("USER");
+		}
+		String token=jwtTokenProvider.generateToken(user.getUserName(), roleClaim);
 	
-		return new LoginResponseDTO(token, user.getUserName(), role);
+		return new LoginResponseDTO(token, user.getUserName(), roleClaim);
 	}
 
 	@Override

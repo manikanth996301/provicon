@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	                String username = jwtTokenProvider.extractUsername(token);
 	                System.out.println("[JWT FILTER] Token is valid. Username = " + username);
 
-	                // Only set authentication if not already set
+	               
 	                if (SecurityContextHolder.getContext().getAuthentication() == null) {
 	                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 

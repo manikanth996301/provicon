@@ -21,6 +21,7 @@ private final Key key=Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UT
 public String generateToken(String username,String role) {
 	return Jwts.builder()
 			.setSubject(username)
+			.claim("role", role)
 			.addClaims(Map.of("role",role))
 			.setIssuedAt(new Date())
 			.setExpiration(new Date(System.currentTimeMillis()+ EXPIRATION_TIME ))
@@ -30,6 +31,9 @@ public String generateToken(String username,String role) {
 }
 public String extractUsername(String token) {
 	return parseClaims(token).getBody().getSubject();
+}
+public String extractRole(String token) {
+	return parseClaims(token).getBody().get("role",String.class);
 }
 public boolean isValidToken(String token) {
 	try {
